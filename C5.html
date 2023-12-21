@@ -7,7 +7,7 @@
 	<title>Root Analysis Score</title>
 	<style>
 		body {
-			font-family: Arial, sans-serif;
+			font-family: 'Trebuchet MS', sans-serif;
 			text-align: center;
 		}
 		label {
@@ -21,6 +21,28 @@
 		label input {
 			margin-left: 10px;
 		}
+
+		label span .yes { 
+			color: green;
+		}
+
+		label span .no { 
+			color: red;
+		}
+
+		#finalScore {
+			color: lightseagreen;
+		}
+
+		h2 {
+			color: purple;
+		}
+
+		#scoreResult {
+			display: none;
+		}
+
+		<div id="scoreResult">
 	</style>
 </head>
 <body>
@@ -31,35 +53,39 @@
 		<label>
 			Positive C5 Tinel's Test:
 			<span>
-				<input type="radio" name="criteria1" value="yes"> Yes
-				<input type="radio" name="criteria1" value="no"> No
+				<input type="radio" name="criteria1" value="yes"> <span class="yes">Yes</span>
+				<input type="radio" name="criteria1" value="no"> <span class="no">No</span>
 			</span>
 		</label>
-
+		<br>
+		<br>
 		<label>
 			CT Myelogram: intact C5 spinal nerve:
 			<span>
-				<input type="radio" name="criteria2" value="yes"> Yes
-				<input type="radio" name="criteria2" value="no"> No
+				<input type="radio" name="criteria2" value="yes"> <span class="yes">Yes</span>
+				<input type="radio" name="criteria2" value="no"> <span class="no">No</span>
 			</span>
 		</label>
-
+		<br>
+		<br>
 		<label>
 			Hemi-diaphragm Elevation:
 			<span>
-				<input type="radio" name="criteria3" value="yes"> Yes
-				<input type="radio" name="criteria3" value="no"> No
+				<input type="radio" name="criteria3" value="yes"> <span class="yes">Yes</span>
+				<input type="radio" name="criteria3" value="no"> <span class="no">No</span>
 			</span>
 		</label>
-
+		<br>
+		<br>
 		<label>
 			Mid-cervical paraspinal fibrillations:
 			<span>
-				<input type="radio" name="criteria4" value="yes"> Yes
-				<input type="radio" name="criteria4" value="no"> No
+				<input type="radio" name="criteria4" value="yes"> <span class="yes">Yes</span>
+				<input type="radio" name="criteria4" value="no"> <span class="no">No</span>
 			</span>
 		</label>
-
+		<br>
+		<br>
 		<button type="button" onclick="calculateScore()">Submit</button>
 	</form>
 
@@ -77,6 +103,10 @@
 			var criteria3 = document.querySelector('input[name="criteria3"]:checked');
 			var criteria4 = document.querySelector('input[name="criteria4"]:checked');
 
+			if(!criteria1 || !criteria2 || !criteria3 || !criteria4) {
+				alert("Please make sure you have selected an option for each criteria!");
+				return;
+			}
 			// Initialize score
 			var score = 0;
 
@@ -86,8 +116,7 @@
 			score += criteria3 && criteria3.value === 'yes' ? 0 : 25;
 			score += criteria4 && criteria4.value === 'yes' ? 0 : 24;
 
-			// Display the final score
-			document.getElementById("finalScore").innerHTML = score;
+			document.getElementById("finalScore").innerHTML = `<span class="percentage">${score}</span>`;
 
 			// Determine the chance based on the score range
 			var chance;
@@ -106,6 +135,5 @@
 			document.getElementById("scoreResult").style.display = "block";
 		}
 	</script>
-
 </body>
 </html>
